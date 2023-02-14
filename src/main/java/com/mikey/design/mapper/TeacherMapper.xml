@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mikey.design.mapper.TeacherMapper">
+    <resultMap id="BaseResultMap" type="com.mikey.design.entity.Teacher">
+        <id column="teacher_id" jdbcType="INTEGER" property="teacherId"/>
+        <result column="teacher_name" jdbcType="VARCHAR" property="teacherName"/>
+        <result column="teacher_sex" jdbcType="INTEGER" property="teacherSex"/>
+        <result column="teacher_info" jdbcType="VARCHAR" property="teacherInfo"/>
+        <result column="teacher_password" jdbcType="VARCHAR" property="teacherPassword"/>
+        <result column="teacher_phone" jdbcType="VARCHAR" property="teacherPhone"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        teacher_id
+        , teacher_name, teacher_sex, teacher_info, teacher_password, teacher_phone
+    </sql>
+    <select id="selectByExample" parameterType="com.mikey.design.entity.TeacherExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from des_teacher
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from des_teacher
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from des_teacher
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.mikey.design.entity.TeacherExample">
+        delete from des_teacher
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.mikey.design.entity.Teacher">
+        insert into des_teacher (teacher_id, teacher_name, teacher_sex,
+                                 teacher_info, teacher_password, teacher_phone)
+        values (#{teacherId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{teacherSex,jdbcType=INTEGER},
+                #{teacherInfo,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mikey.design.entity.Teacher">
+        insert into des_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                teacher_id,
+            </if>
+            <if test="teacherName != null">
+                teacher_name,
+            </if>
+            <if test="teacherSex != null">
+                teacher_sex,
+            </if>
+            <if test="teacherInfo != null">
+                teacher_info,
+            </if>
+            <if test="teacherPassword != null">
+                teacher_password,
+            </if>
+            <if test="teacherPhone != null">
+                teacher_phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                #{teacherId,jdbcType=INTEGER},
+            </if>
+            <if test="teacherName != null">
+                #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null">
+                #{teacherSex,jdbcType=INTEGER},
+            </if>
+            <if test="teacherInfo != null">
+                #{teacherInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherPassword != null">
+                #{teacherPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherPhone != null">
+                #{teacherPhone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.mikey.design.entity.TeacherExample" resultType="java.lang.Long">
+        select count(*) from des_teacher
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update des_teacher
+        <set>
+            <if test="record.teacherId != null">
+                teacher_id = #{record.teacherId,jdbcType=INTEGER},
+            </if>
+            <if test="record.teacherName != null">
+                teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teacherSex != null">
+                teacher_sex = #{record.teacherSex,jdbcType=INTEGER},
+            </if>
+            <if test="record.teacherInfo != null">
+                teacher_info = #{record.teacherInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teacherPassword != null">
+                teacher_password = #{record.teacherPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teacherPhone != null">
+                teacher_phone = #{record.teacherPhone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update des_teacher
+        set teacher_id = #{record.teacherId,jdbcType=INTEGER},
+        teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+        teacher_sex = #{record.teacherSex,jdbcType=INTEGER},
+        teacher_info = #{record.teacherInfo,jdbcType=VARCHAR},
+        teacher_password = #{record.teacherPassword,jdbcType=VARCHAR},
+        teacher_phone = #{record.teacherPhone,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mikey.design.entity.Teacher">
+        update des_teacher
+        <set>
+            <if test="teacherName != null">
+                teacher_name = #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null">
+                teacher_sex = #{teacherSex,jdbcType=INTEGER},
+            </if>
+            <if test="teacherInfo != null">
+                teacher_info = #{teacherInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherPassword != null">
+                teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherPhone != null">
+                teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mikey.design.entity.Teacher">
+        update des_teacher
+        set teacher_name     = #{teacherName,jdbcType=VARCHAR},
+            teacher_sex      = #{teacherSex,jdbcType=INTEGER},
+            teacher_info     = #{teacherInfo,jdbcType=VARCHAR},
+            teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+            teacher_phone    = #{teacherPhone,jdbcType=VARCHAR}
+        where teacher_id = #{teacherId,jdbcType=INTEGER}
+    </update>
+    <select id="getWillAdmitStudentMes" parameterType="java.lang.Integer" resultMap="WillAdmitStudentMesMap">
+        SELECT *
+        FROM des_title_of_student dt,
+             des_design dd,
+             des_student ds
+        WHERE dt.des_of_title = design_id
+          AND dt.des_of_stu = ds.student_id
+          AND dt.des_state = 0
+          AND dd.design_of_teacher = #{teacherId}
+        ORDER BY des_wish_order
+    </select>
+    <resultMap id="WillAdmitStudentMesMap" type="com.mikey.design.entity.TitleOfStudent">
+        <id column="des_of_stu_id" jdbcType="INTEGER" property="desOfStuId"/>
+        <result column="des_of_stu" jdbcType="INTEGER" property="desOfStu"/>
+        <result column="des_of_title" jdbcType="INTEGER" property="desOfTitle"/>
+        <result column="des_state" jdbcType="INTEGER" property="desState"/>
+        <result column="des_wish_order" jdbcType="INTEGER" property="desWishOrder"/>
+        <association property="student" javaType="com.mikey.design.entity.Student">
+            <id column="student_id" jdbcType="INTEGER" property="studentId"/>
+            <result column="student_name" jdbcType="VARCHAR" property="studentName"/>
+            <result column="student_sex" jdbcType="INTEGER" property="studentSex"/>
+            <result column="student_password" jdbcType="VARCHAR" property="studentPassword"/>
+            <result column="student_phone" jdbcType="VARCHAR" property="studentPhone"/>
+        </association>
+        <association property="design" javaType="com.mikey.design.entity.Design">
+            <id column="design_id" jdbcType="INTEGER" property="designId"/>
+            <result column="design_of_teacher" jdbcType="INTEGER" property="designOfTeacher"/>
+            <result column="design_title" jdbcType="VARCHAR" property="designTitle"/>
+            <result column="design_num" jdbcType="INTEGER" property="designNum"/>
+            <result column="design_fill_num" jdbcType="INTEGER" property="designFillNum"/>
+            <result column="design_require" jdbcType="VARCHAR" property="designRequire"/>
+        </association>
+    </resultMap>
+    <!--获取当前教师已经录取的学生-->
+    <select id="getAllAlreayAdmitStudent" parameterType="java.lang.Integer" resultMap="WillAdmitStudentMesMap">
+        SELECT *
+        FROM des_title_of_student dt,
+             des_student ds,
+             des_design dd
+        WHERE dt.des_of_stu = ds.student_id
+          AND dd.design_id = dt.des_of_title
+          AND des_state = 1
+          AND dd.design_of_teacher = #{teacherId}
+    </select>
+    <!--获取学生填报志愿状态-->
+    <select id="getAllStudentWishStateForAdmin" resultMap="WillAdmitStudentMesMap">
+        SELECT *
+        FROM des_student
+                 LEFT JOIN
+             des_title_of_student dtos
+             ON
+                 des_student.student_id = dtos.des_of_stu
+        GROUP BY student_id
+        ORDER BY des_state
+    </select>
+    <!--//统计已经填报志愿的人数个数-->
+    <!--long getAlreadyFillWishStudentNum();-->
+    <select id="getAlreadyFillWishStudentNum" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM (SELECT *
+              from des_student
+                       left join des_title_of_student dtos
+                                 on des_student.student_id = dtos.des_of_stu
+              where des_of_stu_id is not null
+              GROUP BY student_id) AS tbl
+    </select>
+    <!--//统计未填报志愿人数个数-->
+    <!--long getNotFillWishStudentNum();-->
+    <select id="getNotFillWishStudentNum" resultType="java.lang.Long">
+        SELECT count(student_id)
+        FROM des_student
+                 LEFT JOIN des_title_of_student dtos
+                           ON des_student.student_id = dtos.des_of_stu
+        WHERE des_of_stu_id IS NULL
+    </select>
+</mapper>
